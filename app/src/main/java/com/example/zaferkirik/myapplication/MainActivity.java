@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
        token="g8QBPvBVBb3iWOroxwt3e8SQ3gGV3y88zKW2vVPA4BxNzNSn/VuqCoYhcMnHgy8s7QExtNNYAEgE9c6oX67vjqPlQOMEK0Y3VIsaD59h4yzv/ro5YnyDWQ1ggUQtTjw9qygCrcM/PjhPQdHt891Fsb+Uwlz+dRBE8Bd3V3R/Pp9f305kDOBU1ykZFRo/93HsLXGLHZvwpkffJo2rSydjho0EtG+pgAxDPENOf3LYFtocV1BWNqfqT5NN8IonjtCg";
 
         Map<String,Object> params=new HashMap();
-        params.put("aciklama","zafer");
+        params.put("aciklama","zaferrrrr");
         params.put("kul_ad","zaferkrk");
         params.put("il","İstanbul");
         params.put("gecen_sure","1 Saat");
@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             //helloTextView.setText(error.toString());
-                            //parseVolleyError(error);
 
 
 
@@ -114,20 +113,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-    public void parseVolleyError(VolleyError error) {
-        try {
-            String responseBody = new String(error.networkResponse.data, "utf-8");
-            JSONObject data = new JSONObject(responseBody);
-            JSONArray errors = data.getJSONArray("errors");
-            JSONObject jsonMessage = errors.getJSONObject(0);
-            String message = jsonMessage.getString("message");
-            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-            Log.v("ErrorMessage0",message);
-        } catch (JSONException e) {
-            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
-            Log.v("ErrorMessage1",e.toString());
-        } catch (UnsupportedEncodingException errorr) {
-            Log.v("ErrorMessage2",errorr.toString());
-        }
-    }
+
 }
