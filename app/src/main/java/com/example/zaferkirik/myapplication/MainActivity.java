@@ -47,10 +47,10 @@ public class MainActivity extends AppCompatActivity {
         listitem.put("turkod","122");
         listitem.put("tursayisi","10");
         list.add(listitem);
-        Map<String,String> listitem2=new HashMap();
-        listitem2.put("turkod","124");
-        listitem2.put("tursayisi","12");
-        list.add(listitem2);
+        listitem=new HashMap();
+        listitem.put("turkod","124");
+        listitem.put("tursayisi","12");
+        list.add(listitem);
 
          JSONArray listobje = new JSONArray(list);
 
