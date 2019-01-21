@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.android.volley.AuthFailureError;
@@ -18,8 +19,10 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         RequestQueue requstQueue = Volley.newRequestQueue(this);
-        String url="http://api.trakus.org/api/gozlem/gozlemgonder";
+        String url="http://api.trakus.org/api/gozlem/GozlemGonder";
 
 
         List<Object> list=new ArrayList<Object>();
@@ -69,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
                Log.v("resdf", "zzz="+ listobje.toString());
         Log.v("sda", "zscszz="+ parameters.toString());
-
+        String body;
         try{
             JsonObjectRequest jsonobj = new JsonObjectRequest(Request.Method.POST, url,parameters,
                     new Response.Listener<JSONObject>() {
@@ -84,7 +87,11 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             //helloTextView.setText(error.toString());
-                            Log.v("ress", "index="+ error.toString());
+                            //parseVolleyError(error);
+
+
+
+
                         }
                     }
             ){
@@ -92,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> params = new HashMap<String, String>();
-                    params.put("Content-Type", "application/json;");
+                    params.put("Content-Type", "application/json;charset=utf-8");
 
                     String auth = "Basic "+token;
                     params.put("Authorization", auth);
@@ -106,5 +113,21 @@ public class MainActivity extends AppCompatActivity {
             Log.v("resccs", "index="+ ex.toString());
         }
 
+    }
+    public void parseVolleyError(VolleyError error) {
+        try {
+            String responseBody = new String(error.networkResponse.data, "utf-8");
+            JSONObject data = new JSONObject(responseBody);
+            JSONArray errors = data.getJSONArray("errors");
+            JSONObject jsonMessage = errors.getJSONObject(0);
+            String message = jsonMessage.getString("message");
+            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+            Log.v("ErrorMessage0",message);
+        } catch (JSONException e) {
+            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+            Log.v("ErrorMessage1",e.toString());
+        } catch (UnsupportedEncodingException errorr) {
+            Log.v("ErrorMessage2",errorr.toString());
+        }
     }
 }
